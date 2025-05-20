@@ -5,6 +5,6 @@ import jakarta.persistence.Entity;
 @Entity
 public class Course {
 
-	private int no;
+	private int courseId;
 	
 }
