@@ -1,0 +1,84 @@
+package com.skillImprov.entity;
+
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+@Entity
+@Table(name="enrollment")
+
+public class Enrollment {
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Column(name = "id")
+	    private Long id;
+
+	    @Column(name = "user_id", nullable = false)
+	    private Long userId; // Or UUID if you're using UUID for User entity
+
+	    @Column(name = "course_id", nullable = false)
+	    private Long courseId; // Or UUID if you're using UUID for Course entity
+
+	    @Column(name = "enrolled_at", nullable = false)
+	    private LocalDateTime enrolledAt;
+
+	    @Column(name="completed")
+	    private boolean completed = false;
+
+	    // Constructors
+	    public Enrollment() {}
+
+	    public Enrollment(Long userId, Long courseId) {
+	        this.userId = userId;
+	        this.courseId = courseId;
+	        this.enrolledAt = LocalDateTime.now();
+	        this.completed = false;
+	    }
+
+	    // Getters and Setters
+
+	    public Long getId() {
+	        return id;
+	    }
+
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
+
+	    public Long getUserId() {
+	        return userId;
+	    }
+
+	    public void setUserId(Long userId) {
+	        this.userId = userId;
+	    }
+
+	    public Long getCourseId() {
+	        return courseId;
+	    }
+
+	    public void setCourseId(Long courseId) {
+	        this.courseId = courseId;
+	    }
+
+	    public LocalDateTime getEnrolledAt() {
+	        return enrolledAt;
+	    }
+
+	    public void setEnrolledAt(LocalDateTime enrolledAt) {
+	        this.enrolledAt = enrolledAt;
+	    }
+
+	    public boolean isCompleted() {
+	        return completed;
+	    }
+
+	    public void setCompleted(boolean completed) {
+	        this.completed = completed;
+	    }
+
+}
