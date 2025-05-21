@@ -2,8 +2,13 @@ package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.skillforge.authservice.model.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,34 +19,33 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "userId")
-    private int  userId;
+    private long userId; // Or use Long if you're not using UUID
 
-    @Column(name="username")
+    @Column(nullable = false, unique = true, length = 100)
     private String username;
 
-    @Column(name="email")
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(name="password")
+    @Column(nullable = false)
     private String password;
 
-    
-    @Column(name="role")
-    private String role;
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private Role role;
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
-
+    @CreationTimestamp
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
     // Constructors
     public User() {}
 
-    public User(String username, String email, String password, String role) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -51,12 +55,12 @@ public class User {
 
     // Getters and Setters
 
-    public int getId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setId(int  userId) {
-        this.userId =userId;
+    public void setUserId(long id) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -83,11 +87,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -106,11 +110,5 @@ public class User {
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
-
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", role=" + role + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + "]";
-	}
 }
 

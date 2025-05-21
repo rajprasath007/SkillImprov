@@ -2,9 +2,17 @@ package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import org.springframework.stereotype.Component;
+
+import com.skillforge.courseservice.model.Level;
+import com.skillforge.enums.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,127 +20,127 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="course")
+@Component
 public class Course {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="courseId")
-	private int courseId;
-	@Column(name="courseTitle")
-	private String courseTitle;
-	@Column(name="fullDescription")
-	
-	private String fullDescription;
-	@Column(name = "thumbnail_url")
-    private String thumbnailUrl;
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long courseId;
 
-    @Column(name="category")
-    private String category;
+	    @Column(nullable = false, length = 200)
+	    private String title;
 
-   
-    @Column(name="level")
-    private String level;
+	    @Column(columnDefinition = "TEXT")
+	    private String description;
 
-    
-    @Column(name="status")
-    private Boolean status;
+	    @Column(name = "thumbnail_url")
+	    private String thumbnailUrl;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+	    @Column(nullable = false, length = 100)
+	    private String category;
 
-    // Foreign Key Reference
-    @Column(name = "instructor_id", nullable = false)
-    private Long instructorId; // You can use UUID if your User entity uses UUID
+	    @Enumerated(EnumType.STRING)
+	    @Column(nullable = false, length = 20)
+	    private Level level;
 
-    // Constructors
-    public Course() {}
+	    @Enumerated(EnumType.STRING)
+	    @Column(nullable = false, length = 20)
+	    private Status status;
+        @CreationTimestamp
+	    @Column(name = "created_at", nullable = false)
+	    private LocalDateTime createdAt;
 
-    public Course(String courseTitle, String fullDescription, String thumbnailUrl, String category,
-                  String level, Boolean status, Long instructorId) {
-        this.courseTitle = courseTitle;
-        this.fullDescription = fullDescription;
-        this.thumbnailUrl = thumbnailUrl;
-        this.category = category;
-        this.level = level;
-        this.status = status;
-        this.instructorId = instructorId;
-        this.createdAt = LocalDateTime.now();
-    }
+	    // Foreign Key Reference
+	    @Column(name = "instructor_id", nullable = false)
+	    private Long instructorId; // You can use UUID if your User entity uses UUID
 
-    // Getters and Setters
+	    // Constructors
+	    public Course() {}
+	    public Course(String title, String description, String thumbnailUrl, String category,
+                Level level, Status status, Long instructorId) {
+      this.title = title;
+      this.description = description;
+      this.thumbnailUrl = thumbnailUrl;
+      this.category = category;
+      this.level = level;
+      this.status = status;
+      this.instructorId = instructorId;
+      this.createdAt = LocalDateTime.now();
+     }
 
-    public int getCourseId() {
-        return courseId;
-    }
+	    // Getters and Setters
 
-    public void setId(Long id) {
-        this.courseId = courseId;
-    }
+	    public Long getId() {
+	        return courseId;
+	    }
 
-    public String getCourseTitle() {
-        return courseTitle;
-    }
+	    public void setId(Long courseId) {
+	        this.courseId = courseId;
+	    }
+        
+	    public String getTitle() {
+	        return title;
+	    }
+	   
 
-    public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle;
-    }
+	    public void setTitle(String title) {
+	        this.title = title;
+	    }
 
-    public String getFullDescription() {
-        return fullDescription;
-    }
+	    public String getDescription() {
+	        return description;
+	    }
+        
+	    public void setDescription(String description) {
+	        this.description = description;
+	    }
 
-    public void setFullDescription(String fullDescription) {
-        this.fullDescription = fullDescription;
-    }
+	    public String getThumbnailUrl() {
+	        return thumbnailUrl;
+	    }
+        
+	    public void setThumbnailUrl(String thumbnailUrl) {
+	        this.thumbnailUrl = thumbnailUrl;
+	    }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
-    }
+	    public String getCategory() {
+	        return category;
+	    }
+	   
+	    public void setCategory(String category) {
+	        this.category = category;
+	    }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
-    }
+	    public Level getLevel() {
+	        return level;
+	    }
+	    
+	    public void setLevel(Level level) {
+	        this.level = level;
+	    }
 
-    public String getCategory() {
-        return category;
-    }
+	    public Status getStatus() {
+	        return status;
+	    }
+	   
+	    public void setStatus(Status status) {
+	        this.status = status;
+	    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-   
+	    public LocalDateTime getCreatedAt() {
+	        return createdAt;
+	    }
 
-    public String getLevel() {
-        return level;
-    }
+	    public void setCreatedAt(LocalDateTime createdAt) {
+	        this.createdAt = createdAt;
+	    }
 
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Long getInstructorId() {
-        return instructorId;
-    }
-
-    public void setInstructorId(Long instructorId) {
-        this.instructorId = instructorId;
-    }
-
+	    public Long getInstructorId() {
+	        return instructorId;
+	    }
+	    
+	    public void setInstructorId(Long instructorId) {
+	        this.instructorId = instructorId;
+	    } 
 	
 	
 }

@@ -2,6 +2,9 @@ package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,12 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 @Entity
 @Table(name="enrollment")
-
+@Component
 public class Enrollment {
-	    @Id
+	   @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Column(name = "id")
-	    private Long id;
+	   
+	    private Long enrollmentId;
 
 	    @Column(name = "user_id", nullable = false)
 	    private Long userId; // Or UUID if you're using UUID for User entity
@@ -26,7 +29,7 @@ public class Enrollment {
 	    @Column(name = "enrolled_at", nullable = false)
 	    private LocalDateTime enrolledAt;
 
-	    @Column(name="completed")
+	    @Column(nullable = false)
 	    private boolean completed = false;
 
 	    // Constructors
@@ -42,11 +45,11 @@ public class Enrollment {
 	    // Getters and Setters
 
 	    public Long getId() {
-	        return id;
+	        return enrollmentId;
 	    }
 
-	    public void setId(Long id) {
-	        this.id = id;
+	    public void setId(Long enrollmentId) {
+	        this.enrollmentId = enrollmentId;
 	    }
 
 	    public Long getUserId() {
