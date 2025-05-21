@@ -1,12 +1,8 @@
-
 package com.skillImprov.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,12 +10,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 @Entity
-@Table(name="proges")
+@Table(name="progress")
 @Component
-public class Progres {
+public class Progress{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long progesId;
+    private Long progressId;
 
     @Column(name = "user_id", nullable = false)
     private Long userId; // Use UUID if your User entity uses UUID
@@ -34,9 +30,9 @@ public class Progres {
     private LocalDateTime updatedAt;
 
     // Constructors
-    public Progres() {}
+    public Progress() {}
 
-    public Progres(Long userId, Long lessonId, BigDecimal progress) {
+    public Progress(Long userId, Long lessonId, BigDecimal progress) {
         this.userId = userId;
         this.lessonId = lessonId;
         this.progress = progress;
@@ -46,11 +42,11 @@ public class Progres {
     // Getters and Setters
 
     public Long getId() {
-        return progesId;
+        return progressId;
     }
 
-    public void setId(Long id) {
-        this.progesId = progesId;
+    public void setId(Long progressId) {
+        this.progressId = progressId;
     }
 
     public Long getUserId() {
@@ -84,5 +80,11 @@ public class Progres {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+	@Override
+	public String toString() {
+		return "Progress [progressId=" + progressId + ", userId=" + userId + ", lessonId=" + lessonId + ", progress="
+				+ progress + ", updatedAt=" + updatedAt + "]";
+	}
 
 }

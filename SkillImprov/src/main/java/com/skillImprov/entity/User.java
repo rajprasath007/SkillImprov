@@ -3,9 +3,7 @@ package com.skillImprov.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-
-import com.skillforge.authservice.model.Role;
-
+import com.skillImprov.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,14 +14,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userId; // Or use Long if you're not using UUID
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(nullable = false, unique = false, length = 100)
     private String username;
 
     @Column(nullable = false, unique = true, length = 150)
@@ -59,7 +57,7 @@ public class User {
         return userId;
     }
 
-    public void setUserId(long id) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -110,5 +108,11 @@ public class User {
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", role=" + role + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + "]";
+	}
 }
 

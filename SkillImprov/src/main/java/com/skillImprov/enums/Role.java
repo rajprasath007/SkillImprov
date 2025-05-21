@@ -1,4 +1,4 @@
-package com.skillforge.authservice.model;
+package com.skillImprov.enums;
 
 public enum Role {
     STUDENT,

@@ -1,8 +1,6 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
-
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
@@ -83,5 +81,11 @@ public class Enrollment {
 	    public void setCompleted(boolean completed) {
 	        this.completed = completed;
 	    }
+
+		@Override
+		public String toString() {
+			return "Enrollment [enrollmentId=" + enrollmentId + ", userId=" + userId + ", courseId=" + courseId
+					+ ", enrolledAt=" + enrolledAt + ", completed=" + completed + "]";
+		}
 
 }

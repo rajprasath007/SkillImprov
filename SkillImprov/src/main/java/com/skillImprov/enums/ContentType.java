@@ -1,5 +1,5 @@
 
-package com.skillforge.lessonservice.model;
+package com.skillImprov.enums;
 
 public enum ContentType {
     VIDEO,

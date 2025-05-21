@@ -1,11 +1,8 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
-
-import com.skillforge.lessonservice.model.ContentType;
-
+import com.skillImprov.enums.ContentType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -61,7 +58,7 @@ public class Lesson {
         return lessonId;
     }
 
-    public void setId(Long id) {
+    public void setId(Long lessonId) {
         this.lessonId = lessonId;
     }
 
@@ -112,5 +109,11 @@ public class Lesson {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+	@Override
+	public String toString() {
+		return "Lesson [lessonId=" + lessonId + ", courseId=" + courseId + ", title=" + title + ", videoUrl=" + videoUrl
+				+ ", orderIndex=" + orderIndex + ", contentType=" + contentType + ", createdAt=" + createdAt + "]";
+	}
 
 }

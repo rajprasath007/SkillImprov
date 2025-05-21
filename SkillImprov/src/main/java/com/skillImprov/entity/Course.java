@@ -1,14 +1,11 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
-
 import org.springframework.stereotype.Component;
 
-import com.skillforge.courseservice.model.Level;
-import com.skillforge.enums.Status;
-
+import com.skillImprov.enums.DifficultyLevel;
+import com.skillImprov.enums.VideoStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,11 +37,11 @@ public class Course {
 
 	    @Enumerated(EnumType.STRING)
 	    @Column(nullable = false, length = 20)
-	    private Level level;
+	    private DifficultyLevel level;
 
 	    @Enumerated(EnumType.STRING)
 	    @Column(nullable = false, length = 20)
-	    private Status status;
+	    private VideoStatus status;
         @CreationTimestamp
 	    @Column(name = "created_at", nullable = false)
 	    private LocalDateTime createdAt;
@@ -55,17 +52,16 @@ public class Course {
 
 	    // Constructors
 	    public Course() {}
-	    public Course(String title, String description, String thumbnailUrl, String category,
-                Level level, Status status, Long instructorId) {
-      this.title = title;
-      this.description = description;
-      this.thumbnailUrl = thumbnailUrl;
-      this.category = category;
-      this.level = level;
-      this.status = status;
-      this.instructorId = instructorId;
-      this.createdAt = LocalDateTime.now();
-     }
+	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, Long instructorId) {
+	    	this.title = title;
+	    	this.description = description;
+	    	this.thumbnailUrl = thumbnailUrl;
+	    	this.category = category;
+	    	this.level = level;
+	    	this.status = status;
+	    	this.instructorId = instructorId;
+	    	this.createdAt = LocalDateTime.now();
+	    }
 
 	    // Getters and Setters
 
@@ -110,19 +106,19 @@ public class Course {
 	        this.category = category;
 	    }
 
-	    public Level getLevel() {
+	    public DifficultyLevel getDifficultyLevel() {
 	        return level;
 	    }
 	    
-	    public void setLevel(Level level) {
+	    public void setDifficultyLevel(DifficultyLevel level) {
 	        this.level = level;
 	    }
 
-	    public Status getStatus() {
+	    public VideoStatus getStatus() {
 	        return status;
 	    }
 	   
-	    public void setStatus(Status status) {
+	    public void setStatus(VideoStatus status) {
 	        this.status = status;
 	    }
 
@@ -140,7 +136,14 @@ public class Course {
 	    
 	    public void setInstructorId(Long instructorId) {
 	        this.instructorId = instructorId;
-	    } 
+	    }
+	    
+		@Override
+		public String toString() {
+			return "Course [courseId=" + courseId + ", title=" + title + ", description=" + description
+					+ ", thumbnailUrl=" + thumbnailUrl + ", category=" + category + ", level=" + level + ", status="
+					+ status + ", createdAt=" + createdAt + ", instructorId=" + instructorId + "]";
+		} 
 	
 	
 }
