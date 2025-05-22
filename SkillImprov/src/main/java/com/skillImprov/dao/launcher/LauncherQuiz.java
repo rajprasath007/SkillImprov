@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+
 import com.skillImprov.config.BeanConfig;
 import com.skillImprov.entity.Lesson;
 import com.skillImprov.entity.Quiz;

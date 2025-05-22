@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 @Entity
 @Table(name="progress")
 @Component
@@ -39,7 +40,7 @@ public class Progress{
     // Constructors
     public Progress() {}
 
-    public Progress(Long userId, Long lessonId, BigDecimal progress) {
+    public Progress(Long userId, Long lessonId, BigDecimal progress, User user, Lesson lesson) {
         this.user = user;
         this.lesson = lesson;
         this.progress = progress;

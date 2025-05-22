@@ -17,7 +17,7 @@ import com.skillImprov.entity.User;
 public class LauncherProgress {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-		Progress en =(Progress)(ac.getBean("progress"));
+		Progress progress =(Progress)(ac.getBean("progress"));
 		
 		Session session=new Configuration().configure().addAnnotatedClass(User.class).addAnnotatedClass(Progress.class).addAnnotatedClass(Lesson.class).buildSessionFactory().openSession();
 		Lesson lesson = session.get(Lesson.class,5L); 
@@ -29,7 +29,6 @@ public class LauncherProgress {
 	    System.out.println(lesson);
 	  
 		if (user != null || lesson != null) {
-		    Progress progress = new Progress();
 		    progress.setUser(user);
 		    progress.setLesson(lesson);
 		    progress.setProgress(new BigDecimal("76.50"));
@@ -51,10 +50,10 @@ public class LauncherProgress {
 		try {
             session.beginTransaction();
 
-            List<Progress> progress = session.createQuery("from Progress",Progress.class).list();
+            List<Progress> progres = session.createQuery("from Progress",Progress.class).list();
 
-            for (Progress progres : progress) {
-                System.out.println(progress);
+            for (Progress prog : progres) {
+                System.out.println(prog);
             }
 
             session.getTransaction().commit();
@@ -125,7 +124,7 @@ public class LauncherProgress {
             session.getTransaction().commit();
         } finally {
             session.close();
-           
+           ac.close();
         }
 	}   
 }

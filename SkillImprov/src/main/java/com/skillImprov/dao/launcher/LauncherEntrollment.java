@@ -16,9 +16,11 @@ import com.skillImprov.entity.User;
 public class LauncherEntrollment {
 	 public static void main(String[] args) {
 			AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-			Enrollment en =(Enrollment)(ac.getBean("enrollment"));
+			Enrollment enrollment =(Enrollment)(ac.getBean("enrollment"));
 			
-			Session session=new Configuration().configure().addAnnotatedClass(User.class).addAnnotatedClass(Course.class).addAnnotatedClass(Enrollment.class).buildSessionFactory().openSession();
+			Session session = new Configuration().configure().addAnnotatedClass(User.class)
+					.addAnnotatedClass(Course.class).addAnnotatedClass(Enrollment.class)
+					.buildSessionFactory().openSession();
 			Course course = session.get(Course.class,1L); 
 			User user = session.get(User.class,1L); 
 		    
@@ -28,7 +30,6 @@ public class LauncherEntrollment {
 		    System.out.println(course);
 		  
 			if (user != null || course != null) {
-				Enrollment enrollment = new Enrollment();
 				enrollment.setCourse(course);   // this is required
 				enrollment.setUser(user);
 				enrollment.setCompleted(false);
@@ -52,8 +53,8 @@ public class LauncherEntrollment {
 
 	            List<Enrollment> enrollment1 = session.createQuery("from Enrollment",Enrollment.class).list();
 
-	            for (Enrollment enrollment : enrollment1) {
-	                System.out.println(enrollment);
+	            for (Enrollment en : enrollment1) {
+	                System.out.println(en);
 	            }
 
 	            session.getTransaction().commit();
@@ -124,10 +125,8 @@ public class LauncherEntrollment {
 		            session.getTransaction().commit();
 		        } finally {
 		            session.close();
-		           
 		        }
-	        
-			
+			ac.close();
 	     }
 	
 
