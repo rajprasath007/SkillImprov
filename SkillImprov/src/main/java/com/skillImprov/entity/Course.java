@@ -21,7 +21,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="course")
+@Table(name="courses")
 @Component
 public class Course {
 	    @Id
@@ -52,9 +52,9 @@ public class Course {
         @CreationTimestamp
 	    @Column(name = "created_at", nullable = false)
 	    private LocalDateTime createdAt;
-        @ManyToOne
-        @JoinColumn(name = "instructor_id", referencedColumnName = "userId", nullable = false)
-        private User instructor;
+        @ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "UserId", nullable = false)
+	    private User user;
 
 	    public Long getCourseId() {
 			return courseId;
@@ -68,28 +68,29 @@ public class Course {
 		public void setLevel(DifficultyLevel level) {
 			this.level = level;
 		}
-		public User getInstructor() {
-			return instructor;
-		}
-		public void setInstructor(User instructor) {
-			this.instructor = instructor;
-		}
+		
 		// Constructors
 	    public Course() {}
-	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, User instructor) {
+	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, User user) {
 	    	this.title = title;
 	    	this.description = description;
 	    	this.thumbnailUrl = thumbnailUrl;
 	    	this.category = category;
 	    	this.level = level;
 	    	this.status = status;
-	    	this.instructor = instructor;
+	    	this.user = user;
 	    	this.createdAt = LocalDateTime.now();
 	    }
 
 	    // Getters and Setters
 
-	    public Long getId() {
+	    public User getUser() {
+			return user;
+		}
+		public void setUser(User user) {
+			this.user = user;
+		}
+		public Long getId() {
 	        return courseId;
 	    }
 
@@ -160,7 +161,7 @@ public class Course {
 		public String toString() {
 			return "Course [courseId=" + courseId + ", title=" + title + ", description=" + description
 					+ ", thumbnailUrl=" + thumbnailUrl + ", category=" + category + ", level=" + level + ", status="
-					+ status + ", createdAt=" + createdAt + ", instructorId=" + instructor + "]";
+					+ status + ", createdAt=" + createdAt + ", instructorId=" + user + "]";
 		} 
 	
 	

@@ -3,7 +3,10 @@ package com.skillImprov.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
+
 import com.skillImprov.enums.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user")
+@Component
 public class User {
 
 	@Id

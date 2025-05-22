@@ -1,20 +1,28 @@
 package com.skillImprov.config;
 
-import java.time.LocalDateTime;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration; // ✅ Hibernate Configuration
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
-import com.mysql.cj.Session;
 import com.skillImprov.entity.Course;
 import com.skillImprov.entity.Enrollment;
+import com.skillImprov.entity.Lesson;
+import com.skillImprov.entity.Progress;
+import com.skillImprov.entity.Quiz;
 import com.skillImprov.entity.User;
 
-@Configuration
-@ComponentScan(basePackages="com.skillImprov.entity")
-
+@SpringBootConfiguration
+@ComponentScan(basePackages = "com.skillImprov.entity")
 public class BeanConfig {
-	
 
+    @Bean
+    public Session hibSession() {
+        return new org.hibernate.cfg.Configuration()
+                .configure()
+                .addAnnotatedClass(Quiz.class).addAnnotatedClass(Lesson.class).addAnnotatedClass(User.class).addAnnotatedClass(Enrollment.class).addAnnotatedClass(Course.class).addAnnotatedClass(Progress.class)
+                .buildSessionFactory().openSession();
+    }
 }
