@@ -2,12 +2,17 @@ package com.skillImprov.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 @Entity
 @Table(name="progress")
@@ -17,11 +22,13 @@ public class Progress{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long progressId;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId; // Use UUID if your User entity uses UUID
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
-    @Column(name = "lesson_id", nullable = false)
-    private Long lessonId; // Use UUID if your Lesson entity uses UUID
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "lesson_id", nullable = false)
+	private Lesson lesson;
 
     @Column(nullable = false, precision = 5, scale = 2)
     private BigDecimal progress; // e.g., 75.50 (% complete)
@@ -33,8 +40,8 @@ public class Progress{
     public Progress() {}
 
     public Progress(Long userId, Long lessonId, BigDecimal progress) {
-        this.userId = userId;
-        this.lessonId = lessonId;
+        this.user = user;
+        this.lesson = lesson;
         this.progress = progress;
         this.updatedAt = LocalDateTime.now();
     }
@@ -49,23 +56,33 @@ public class Progress{
         this.progressId = progressId;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
+   
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    public Long getProgressId() {
+		return progressId;
+	}
 
-    public Long getLessonId() {
-        return lessonId;
-    }
+	public void setProgressId(Long progressId) {
+		this.progressId = progressId;
+	}
 
-    public void setLessonId(Long lessonId) {
-        this.lessonId = lessonId;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public BigDecimal getProgress() {
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Lesson getLesson() {
+		return lesson;
+	}
+
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}
+
+	public BigDecimal getProgress() {
         return progress;
     }
 
@@ -83,7 +100,7 @@ public class Progress{
 
 	@Override
 	public String toString() {
-		return "Progress [progressId=" + progressId + ", userId=" + userId + ", lessonId=" + lessonId + ", progress="
+		return "Progress [progressId=" + progressId + ", userId=" + user + ", lessonId=" + lesson + ", progress="
 				+ progress + ", updatedAt=" + updatedAt + "]";
 	}
 

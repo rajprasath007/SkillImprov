@@ -1,15 +1,21 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
+
 import com.skillImprov.enums.ContentType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,10 +25,28 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lessonId;
+   
+    public Long getLessonId() {
+		return lessonId;
+	}
 
-    // Foreign key to Course
-    @Column(name = "course_id", nullable = false)
-    private Long courseId; // You can use UUID if your Course uses UUID
+	public void setLessonId(Long lessonId) {
+		this.lessonId = lessonId;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
+    
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+// You can use UUID if your Course uses UUID
 
     @Column(nullable = false, length = 200)
     private String title;
@@ -43,8 +67,8 @@ public class Lesson {
     // Constructors
     public Lesson() {}
 
-    public Lesson(Long courseId, String title, String videoUrl, Integer orderIndex, ContentType contentType) {
-        this.courseId = courseId;
+    public Lesson(Course course, String title, String videoUrl, Integer orderIndex, ContentType contentType) {
+        this.course = course;
         this.title = title;
         this.videoUrl = videoUrl;
         this.orderIndex = orderIndex;
@@ -62,13 +86,7 @@ public class Lesson {
         this.lessonId = lessonId;
     }
 
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
+ 
 
     public String getTitle() {
         return title;
@@ -112,7 +130,7 @@ public class Lesson {
 
 	@Override
 	public String toString() {
-		return "Lesson [lessonId=" + lessonId + ", courseId=" + courseId + ", title=" + title + ", videoUrl=" + videoUrl
+		return "Lesson [lessonId=" + lessonId + ", courseId=" + course+ ", title=" + title + ", videoUrl=" + videoUrl
 				+ ", orderIndex=" + orderIndex + ", contentType=" + contentType + ", createdAt=" + createdAt + "]";
 	}
 

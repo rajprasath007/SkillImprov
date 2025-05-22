@@ -1,18 +1,23 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
 
 import com.skillImprov.enums.DifficultyLevel;
 import com.skillImprov.enums.VideoStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +26,8 @@ import jakarta.persistence.Table;
 public class Course {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Column(name = "courseId", nullable = false)
+	   
 	    private Long courseId;
 
 	    @Column(nullable = false, length = 200)
@@ -45,21 +52,38 @@ public class Course {
         @CreationTimestamp
 	    @Column(name = "created_at", nullable = false)
 	    private LocalDateTime createdAt;
+        @ManyToOne
+        @JoinColumn(name = "instructor_id", referencedColumnName = "userId", nullable = false)
+        private User instructor;
 
-	    // Foreign Key Reference
-	    @Column(name = "instructor_id", nullable = false)
-	    private Long instructorId; // You can use UUID if your User entity uses UUID
-
-	    // Constructors
+	    public Long getCourseId() {
+			return courseId;
+		}
+		public void setCourseId(Long courseId) {
+			this.courseId = courseId;
+		}
+		public DifficultyLevel getLevel() {
+			return level;
+		}
+		public void setLevel(DifficultyLevel level) {
+			this.level = level;
+		}
+		public User getInstructor() {
+			return instructor;
+		}
+		public void setInstructor(User instructor) {
+			this.instructor = instructor;
+		}
+		// Constructors
 	    public Course() {}
-	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, Long instructorId) {
+	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, User instructor) {
 	    	this.title = title;
 	    	this.description = description;
 	    	this.thumbnailUrl = thumbnailUrl;
 	    	this.category = category;
 	    	this.level = level;
 	    	this.status = status;
-	    	this.instructorId = instructorId;
+	    	this.instructor = instructor;
 	    	this.createdAt = LocalDateTime.now();
 	    }
 
@@ -130,19 +154,13 @@ public class Course {
 	        this.createdAt = createdAt;
 	    }
 
-	    public Long getInstructorId() {
-	        return instructorId;
-	    }
-	    
-	    public void setInstructorId(Long instructorId) {
-	        this.instructorId = instructorId;
-	    }
+	   
 	    
 		@Override
 		public String toString() {
 			return "Course [courseId=" + courseId + ", title=" + title + ", description=" + description
 					+ ", thumbnailUrl=" + thumbnailUrl + ", category=" + category + ", level=" + level + ", status="
-					+ status + ", createdAt=" + createdAt + ", instructorId=" + instructorId + "]";
+					+ status + ", createdAt=" + createdAt + ", instructorId=" + instructor + "]";
 		} 
 	
 	

@@ -1,28 +1,27 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 @Entity
-@Table(name="enrollment")
+@Table(name = "enrollment")
 @Component
 public class Enrollment {
-	   @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	   
+
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.AUTO)
+	    @Column(name = "enrollmentId")
 	    private Long enrollmentId;
 
-	    @Column(name = "user_id", nullable = false)
-	    private Long userId; // Or UUID if you're using UUID for User entity
+	    @ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "userId", nullable = false)
+	    private User user;
 
-	    @Column(name = "course_id", nullable = false)
-	    private Long courseId; // Or UUID if you're using UUID for Course entity
+	    @ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name = "courseId", nullable = false)
+	    private Course course;
 
 	    @Column(name = "enrolled_at", nullable = false)
 	    private LocalDateTime enrolledAt;
@@ -33,9 +32,33 @@ public class Enrollment {
 	    // Constructors
 	    public Enrollment() {}
 
-	    public Enrollment(Long userId, Long courseId) {
-	        this.userId = userId;
-	        this.courseId = courseId;
+	    public Long getEnrollmentId() {
+			return enrollmentId;
+		}
+
+		public void setEnrollmentId(Long enrollmentId) {
+			this.enrollmentId = enrollmentId;
+		}
+
+		public User getUser() {
+			return user;
+		}
+
+		public void setUser(User user) {
+			this.user = user;
+		}
+
+		public Course getCourse() {
+			return course;
+		}
+
+		public void setCourse(Course course) {
+			this.course = course;
+		}
+
+		public Enrollment(Long userId, Long courseId) {
+	        this.user = user;
+	        this.course = course;
 	        this.enrolledAt = LocalDateTime.now();
 	        this.completed = false;
 	    }
@@ -50,21 +73,9 @@ public class Enrollment {
 	        this.enrollmentId = enrollmentId;
 	    }
 
-	    public Long getUserId() {
-	        return userId;
-	    }
+	   
 
-	    public void setUserId(Long userId) {
-	        this.userId = userId;
-	    }
-
-	    public Long getCourseId() {
-	        return courseId;
-	    }
-
-	    public void setCourseId(Long courseId) {
-	        this.courseId = courseId;
-	    }
+	   
 
 	    public LocalDateTime getEnrolledAt() {
 	        return enrolledAt;
@@ -84,8 +95,11 @@ public class Enrollment {
 
 		@Override
 		public String toString() {
-			return "Enrollment [enrollmentId=" + enrollmentId + ", userId=" + userId + ", courseId=" + courseId
+			return "Enrollment [enrollmentId=" + enrollmentId + ", userId=" + user + ", courseId=" + course
 					+ ", enrolledAt=" + enrolledAt + ", completed=" + completed + "]";
 		}
+
+	   
+	
 
 }
