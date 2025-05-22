@@ -1,8 +1,6 @@
 package com.skillImprov.config;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration; // ✅ Hibernate Configuration
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -11,7 +9,6 @@ import com.skillImprov.entity.Course;
 import com.skillImprov.entity.Enrollment;
 import com.skillImprov.entity.Lesson;
 import com.skillImprov.entity.Progress;
-
 import com.skillImprov.entity.User;
 
 @SpringBootConfiguration
