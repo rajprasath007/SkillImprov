@@ -27,8 +27,8 @@ public class Enrollment {
 	    private LocalDateTime enrolledAt;
 
 	    @Column(nullable = false)
-	    private boolean completed = false;
-
+	    private boolean completed;
+	    
 	    // Constructors
 	    public Enrollment() {}
 
@@ -56,7 +56,7 @@ public class Enrollment {
 			this.course = course;
 		}
 
-		public Enrollment(Long userId, Long courseId) {
+		public Enrollment(Long userId, Long courseId, User user, Course course) {
 	        this.user = user;
 	        this.course = course;
 	        this.enrolledAt = LocalDateTime.now();
@@ -72,10 +72,6 @@ public class Enrollment {
 	    public void setId(Long enrollmentId) {
 	        this.enrollmentId = enrollmentId;
 	    }
-
-	   
-
-	   
 
 	    public LocalDateTime getEnrolledAt() {
 	        return enrolledAt;
