@@ -130,7 +130,7 @@ public class Lesson {
 
 	@Override
 	public String toString() {
-		return "Lesson [lessonId=" + lessonId + ", courseId=" + course+ ", title=" + title + ", videoUrl=" + videoUrl
+		return "Lesson lessonId=" + lessonId + ", courseId=" + course+ ", title=" + title + ", videoUrl=" + videoUrl
 				+ ", orderIndex=" + orderIndex + ", contentType=" + contentType + ", createdAt=" + createdAt + "]";
 	}
 
