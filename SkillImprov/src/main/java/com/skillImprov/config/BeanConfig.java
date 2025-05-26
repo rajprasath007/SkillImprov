@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration; // ✅ Hibernate Configuration
 
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -23,11 +24,12 @@ public class BeanConfig {
 
     @Bean
     public Session hibSession() {
-        return new org.hibernate.cfg.Configuration()
-                .configure()
-
-                .addAnnotatedClass(Lesson.class).addAnnotatedClass(User.class).addAnnotatedClass(Enrollment.class).addAnnotatedClass(Course.class).addAnnotatedClass(Progress.class)
-
-                .buildSessionFactory().openSession();
+        return new org.hibernate.cfg.Configuration().configure().addAnnotatedClass(Lesson.class).addAnnotatedClass(User.class).addAnnotatedClass(Quiz.class).addAnnotatedClass(Enrollment.class).addAnnotatedClass(Course.class).addAnnotatedClass(Progress.class).buildSessionFactory().openSession();
     }
+    
+    @Bean
+    public Quiz quiz() {
+    	return new Quiz();
+    }
+    
 }

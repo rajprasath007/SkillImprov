@@ -31,12 +31,6 @@ public class LauncherQuiz {
 	    System.out.println(lesson);
 	  
 		if (lesson != null) {
-		   
-
-		    // Save to database
-		   
-
-		   
 		    en.setLesson(lesson);  // Foreign key
 		    en.setTitle("Quiz on Spring Boot Basics");
 		    en.setCreatedAt(LocalDateTime.now());  
@@ -46,7 +40,6 @@ public class LauncherQuiz {
 		} else {
 		    System.out.println("User or Lesson not found.");
 		    tx.rollback();
-
 		
 		}
 		try {
@@ -54,8 +47,8 @@ public class LauncherQuiz {
 
        List<Quiz> progress = session.createQuery("from Quiz",Quiz.class).list();
 
-       for (Quiz progres : progress) {
-           System.out.println(progress);
+       for (Quiz q : progress) {
+           System.out.println(q);
        }
 
        session.getTransaction().commit();

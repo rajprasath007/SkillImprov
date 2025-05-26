@@ -21,7 +21,7 @@ public class LaunchCourse {
 		
 		
 	    
-		Session session = null;
+		Session session = (Session) ac.getBean("hibConfig");
 		User user = session.get(User.class,1L); 
 	    
 	    Transaction tx = session.beginTransaction();
