@@ -18,9 +18,7 @@ public class LauncherEntrollment {
 			AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 			Enrollment enrollment =(Enrollment)(ac.getBean("enrollment"));
 			
-			Session session = new Configuration().configure().addAnnotatedClass(User.class)
-					.addAnnotatedClass(Course.class).addAnnotatedClass(Enrollment.class)
-					.buildSessionFactory().openSession();
+			Session session= (Session) ac.getBean("hibSession");
 			Course course = session.get(Course.class,1L); 
 			User user = session.get(User.class,1L); 
 		    

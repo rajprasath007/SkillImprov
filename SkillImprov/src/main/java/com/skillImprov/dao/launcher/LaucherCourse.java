@@ -9,16 +9,20 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.skillImprov.config.BeanConfig;
 import com.skillImprov.entity.Course;
+import com.skillImprov.entity.Lesson;
+import com.skillImprov.entity.Progress;
 import com.skillImprov.entity.User;
 import com.skillImprov.enums.DifficultyLevel;
 import com.skillImprov.enums.VideoStatus;
 
 public class LaucherCourse {
-	 public static void main(String[] args) {
+	 private static Session session;
+
+	public static void main(String[] args) {
 			AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 			Course en =(Course)(ac.getBean("course"));
-			
-			Session session=new Configuration().configure().addAnnotatedClass(Course.class).addAnnotatedClass(User.class).buildSessionFactory().openSession();
+			Session session= (Session) ac.getBean("hibSession");
+		
 			 
 			User user = session.get(User.class,1L); 
 		    
@@ -42,9 +46,9 @@ public class LaucherCourse {
 			   
 		        session.persist(en);
 		        tx.commit();
-			    System.out.println("enrollment saved successfully.");
+			    System.out.println("course saved successfully.");
 			} else {
-			    System.out.println("User or course not found.");
+			    System.out.println("User  not found.");
 			    tx.rollback();
 
 			
@@ -54,27 +58,27 @@ public class LaucherCourse {
 
 	            List<Course> courses= session.createQuery("from Course",Course.class).list();
 
-	            for (Course enrollment : courses) {
-	                System.out.println(enrollment);
+	            for (Course course : courses) {
+	                System.out.println(course);
 	            }
 
 	            session.getTransaction().commit();
 	        }catch(Exception e) {
 	        	e.printStackTrace();
 	        }
-			System.out.println("suceesfully fetch: " );
+			System.out.println("suceesfully fetch course: " );
 			 try {
 		            // Step 3: Begin transaction
 		            session.beginTransaction();
 
 		            // Step 4: Fetch the lesson by ID
 		            Long id = 2L; // set the ID you want to fetch
-		            Course enrollment13 = session.get(Course.class, id);
+		            Course course1 = session.get(Course.class, id);
 
-		            if (enrollment13 != null) {
-		                System.out.println("enrollment found: " + enrollment13);
+		            if (course1 != null) {
+		                System.out.println("course found: " + course1);
 		            } else {
-		                System.out.println("enrollment not found.");
+		                System.out.println("course not found.");
 		            }
 
 		            // Step 5: Commit transaction
@@ -102,17 +106,17 @@ public class LaucherCourse {
 		            	enr.setUser(user);  // Assuming 'user' is an existing User object
 
 		              
-		               
+		            	 System.out.println("course updated successfully.");
 
 		                // Step 6: Hibernate automatically tracks changes (dirty checking)
 		            } else {
-		                System.out.println("Lesson not found");
+		                System.out.println("course not found");
 		            }
 
 		            // Step 7: Commit transaction
 		            session.getTransaction().commit();
 
-		            System.out.println("enrollment updated successfully.");
+		           
 			 }catch(Exception e) {
 				 e.printStackTrace();
 			 }
@@ -123,12 +127,12 @@ public class LaucherCourse {
 		            session.beginTransaction();
 
 		            // Option 1: Retrieve and delete the object
-		            Course  enrollment4 = session.get(Course.class, enrollmentId);
-		            if (enrollment4 != null) {
-		                session.remove(enrollment4);
-		                System.out.println("User deleted successfully.");
+		            Course  course4 = session.get(Course.class, enrollmentId);
+		            if (course4 != null) {
+		                session.remove(course4);
+		                System.out.println("course deleted successfully.");
 		            } else {
-		                System.out.println("User not found.");
+		                System.out.println("course not found.");
 		            }
 
 		            session.getTransaction().commit();
