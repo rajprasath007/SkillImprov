@@ -22,7 +22,7 @@ public class LauncherQuiz {
 		 Quiz en =(Quiz)(ac.getBean("quiz"));
 		
 		Session session= (Session) ac.getBean("hibSession");
-		Lesson lesson = session.get(Lesson.class,2L); 
+		Lesson lesson = session.get(Lesson.class,1L); 
 		 
 	    
 	    Transaction tx = session.beginTransaction();

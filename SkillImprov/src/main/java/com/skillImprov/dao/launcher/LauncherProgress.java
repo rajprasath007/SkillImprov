@@ -19,8 +19,8 @@ public class LauncherProgress {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 		Progress progress =(Progress)(ac.getBean("progress"));
 		
-		Session session=new Configuration().configure().addAnnotatedClass(User.class).addAnnotatedClass(Progress.class).addAnnotatedClass(Lesson.class).buildSessionFactory().openSession();
-		Lesson lesson = session.get(Lesson.class,5L); 
+		Session session = (Session) ac.getBean("hibSession");
+		Lesson lesson = session.get(Lesson.class,1L); 
 		User user = session.get(User.class,1L); 
 	    
 	    Transaction tx = session.beginTransaction();

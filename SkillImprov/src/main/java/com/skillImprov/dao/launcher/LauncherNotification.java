@@ -1,23 +1,25 @@
 package com.skillImprov.dao.launcher;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.skillImprov.config.BeanConfig;
 import com.skillImprov.entity.Course;
+import com.skillImprov.entity.Notification;
 import com.skillImprov.entity.User;
 import com.skillImprov.enums.DifficultyLevel;
+import com.skillImprov.enums.NotificationType;
 import com.skillImprov.enums.VideoStatus;
 
-public class LaunchCourse {
+public class LauncherNotification {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-		Course en =(Course)(ac.getBean("course"));
+		Notification notification = (Notification) ac.getBean("notification");
+
 		
 		
 	    
@@ -31,18 +33,16 @@ public class LaunchCourse {
 	  
 		if (user != null) {
 			
-			en.setTitle("Spring Boot for Beginners");
-			en.setDescription("Learn how to build REST APIs using Spring Boot.");
-			en.setThumbnailUrl("https://example.com/springboot.jpg");
-			en.setCategory("Backend Development");
-			en.setLevel(DifficultyLevel.BEGINNER);
-			en.setStatus(VideoStatus.PUBLISHED);
-			en.setUser(user);
+			notification.setMessage("Your quiz result is available.");
+		    notification.setSeen(false); // new notification
+		    notification.setType(NotificationType.ALERT); // or INFO / REMINDER
+		    notification.setCreatedAt(LocalDateTime.now());
+			notification.setUser(user);
 		    // Save to database
 		    
 
 		   
-	        session.persist(en);
+	        session.persist(notification);
 	        tx.commit();
 		    System.out.println("enrollment saved successfully.");
 		} else {
@@ -54,10 +54,10 @@ public class LaunchCourse {
 		try {
             session.beginTransaction();
 
-            List<Course> courses= session.createQuery("from Course",Course.class).list();
+            List<Notification> notifications= session.createQuery("from Notification",Notification.class).list();
 
-            for (Course enrollment : courses) {
-                System.out.println(enrollment);
+            for (Notification notification1 : notifications) {
+                System.out.println(notification1);
             }
 
             session.getTransaction().commit();
@@ -71,7 +71,7 @@ public class LaunchCourse {
 
 	            // Step 4: Fetch the lesson by ID
 	            Long id = 2L; // set the ID you want to fetch
-	            Course enrollment13 = session.get(Course.class, id);
+	            Notification enrollment13 = session.get(Notification.class, id);
 
 	            if (enrollment13 != null) {
 	                System.out.println("enrollment found: " + enrollment13);
@@ -90,17 +90,12 @@ public class LaunchCourse {
 
 	            // Step 4: Get the lesson by ID
 	            Long id = 3L;
-	            Course  enr = session.get(Course.class, id);
+	            Notification  enr = session.get(Notification.class, id);
 
 	            if (enr != null) {
 	                // Step 5: Update fields
-	                
-	            	enr.setTitle("Java Programming");
-	            	enr.setDescription("Deep dive into Java concurrency and streams.");
-	            	enr.setThumbnailUrl("https://example.com/advanced-java.jpg");
-	            	enr.setCategory("Java Development");
-	            	enr.setLevel(DifficultyLevel.ADVANCED);
-	            	enr.setStatus(VideoStatus.PUBLISHED);
+	            	enr.setMessage("Your quiz result is unavailable.");
+	    		    enr.setSeen(true); 
 	            	enr.setUser(user);  // Assuming 'user' is an existing User object
 
 	              
@@ -125,7 +120,7 @@ public class LaunchCourse {
 	            session.beginTransaction();
 
 	            // Option 1: Retrieve and delete the object
-	            Course  enrollment4 = session.get(Course.class, enrollmentId);
+	            Notification  enrollment4 = session.get(Notification.class, enrollmentId);
 	            if (enrollment4 != null) {
 	                session.remove(enrollment4);
 	                System.out.println("User deleted successfully.");

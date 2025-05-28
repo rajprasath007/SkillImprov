@@ -1,63 +1,52 @@
 package com.skillImprov.dao.launcher;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.skillImprov.config.BeanConfig;
 import com.skillImprov.entity.Course;
+import com.skillImprov.entity.Quiz;
+import com.skillImprov.entity.QuizAttempt;
 import com.skillImprov.entity.User;
 import com.skillImprov.enums.DifficultyLevel;
 import com.skillImprov.enums.VideoStatus;
 
-public class LaunchCourse {
+public class LauncherQuizAttempt {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-		Course en =(Course)(ac.getBean("course"));
-		
-		
-	    
 		Session session = (Session) ac.getBean("hibSession");
-		User user = session.get(User.class,1L); 
-	    
-	    Transaction tx = session.beginTransaction();
 
-	    System.out.println(user);
-	    
-	  
-		if (user != null) {
-			
-			en.setTitle("Spring Boot for Beginners");
-			en.setDescription("Learn how to build REST APIs using Spring Boot.");
-			en.setThumbnailUrl("https://example.com/springboot.jpg");
-			en.setCategory("Backend Development");
-			en.setLevel(DifficultyLevel.BEGINNER);
-			en.setStatus(VideoStatus.PUBLISHED);
-			en.setUser(user);
-		    // Save to database
-		    
+		QuizAttempt attempt = new QuizAttempt(); // ✅ Correct way
 
-		   
-	        session.persist(en);
-	        tx.commit();
-		    System.out.println("enrollment saved successfully.");
+		Quiz quiz = session.get(Quiz.class, 2L);
+		User user = session.get(User.class, 1L);
+
+		if (user != null && quiz != null) {
+		    Transaction tx = session.beginTransaction();
+
+		    attempt.setUser(user);
+		    attempt.setQuiz(quiz);
+		    attempt.setScore(85);
+		    attempt.setAttemptedAt(LocalDateTime.now());
+
+		    session.persist(attempt);
+		    tx.commit();
+		    System.out.println("QuizAttempt saved successfully.");
 		} else {
-		    System.out.println("User or course not found.");
-		    tx.rollback();
-
-		
+		    System.out.println("User or quiz not found.");
 		}
+
 		try {
             session.beginTransaction();
 
-            List<Course> courses= session.createQuery("from Course",Course.class).list();
+            List<QuizAttempt> quizAttempts= session.createQuery("from QuizAttempt",QuizAttempt.class).list();
 
-            for (Course enrollment : courses) {
-                System.out.println(enrollment);
+            for (QuizAttempt quizattempt :quizAttempts ) {
+                System.out.println(quizattempt);
             }
 
             session.getTransaction().commit();
@@ -70,8 +59,8 @@ public class LaunchCourse {
 	            session.beginTransaction();
 
 	            // Step 4: Fetch the lesson by ID
-	            Long id = 2L; // set the ID you want to fetch
-	            Course enrollment13 = session.get(Course.class, id);
+	            Long id = 1L; // set the ID you want to fetch
+	            QuizAttempt enrollment13 = session.get(QuizAttempt.class, id);
 
 	            if (enrollment13 != null) {
 	                System.out.println("enrollment found: " + enrollment13);
@@ -89,18 +78,13 @@ public class LaunchCourse {
 	            session.beginTransaction();
 
 	            // Step 4: Get the lesson by ID
-	            Long id = 3L;
-	            Course  enr = session.get(Course.class, id);
+	            Long id = 1L;
+	            QuizAttempt  enr = session.get(QuizAttempt.class, id);
 
 	            if (enr != null) {
 	                // Step 5: Update fields
 	                
-	            	enr.setTitle("Java Programming");
-	            	enr.setDescription("Deep dive into Java concurrency and streams.");
-	            	enr.setThumbnailUrl("https://example.com/advanced-java.jpg");
-	            	enr.setCategory("Java Development");
-	            	enr.setLevel(DifficultyLevel.ADVANCED);
-	            	enr.setStatus(VideoStatus.PUBLISHED);
+	            	attempt.setScore(85);
 	            	enr.setUser(user);  // Assuming 'user' is an existing User object
 
 	              
@@ -125,7 +109,7 @@ public class LaunchCourse {
 	            session.beginTransaction();
 
 	            // Option 1: Retrieve and delete the object
-	            Course  enrollment4 = session.get(Course.class, enrollmentId);
+	            QuizAttempt  enrollment4 = session.get(QuizAttempt.class, enrollmentId);
 	            if (enrollment4 != null) {
 	                session.remove(enrollment4);
 	                System.out.println("User deleted successfully.");
@@ -140,6 +124,7 @@ public class LaunchCourse {
 	        }
 		
 		
-     }
+     
+	}
 
 }

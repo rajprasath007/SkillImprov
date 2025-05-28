@@ -3,7 +3,7 @@ package com.skillImprov.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-
+import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "quiz")
+@Component
 public class Quiz {
 		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)

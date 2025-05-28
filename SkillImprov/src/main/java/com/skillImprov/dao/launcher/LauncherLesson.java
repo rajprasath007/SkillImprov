@@ -18,13 +18,7 @@ public class LauncherLesson {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
         Lesson lesson = (Lesson) ac.getBean("lesson");
-
-        Session session = new Configuration()
-                .configure()
-                .addAnnotatedClass(Course.class)
-                .addAnnotatedClass(Lesson.class)
-                .buildSessionFactory()
-                .openSession();
+        Session session= (Session) ac.getBean("hibSession");
 
         // Get a course for foreign key reference
         Course course = session.get(Course.class, 3L); // Make sure course with ID 1 exists
