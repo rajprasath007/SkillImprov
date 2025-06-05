@@ -8,9 +8,9 @@
         
         <!-- JDBC Database connection settings -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/skill</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/skillImprov</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">Root</property>
+        <property name="hibernate.connection.password">root</property>
 
         <!-- JDBC connection pool (Hikari or C3P0 can be used instead) -->
         <property name="connection.pool_size">10</property>
