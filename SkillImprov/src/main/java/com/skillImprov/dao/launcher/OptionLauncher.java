@@ -13,7 +13,7 @@ import com.skillImprov.entity.Question;
 import com.skillImprov.entity.Quiz;
 import com.skillImprov.enums.QuestionType;
 
-public class LauncherOption {
+public class OptionLauncher {
 public static void main(String[] args) {
 	AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 	Option en =(Option)(ac.getBean("option"));

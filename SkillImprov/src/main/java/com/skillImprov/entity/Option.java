@@ -18,27 +18,39 @@ import jakarta.persistence.Table;
 public class Option {
 
     @Id
+    @Column(name = "optionId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long optionId;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
-
-    @Column(name = "option_text", nullable = false)
+    @Column(name = "optionText", nullable = false)
     private String optionText;
 
-    @Column(name = "is_correct", nullable = false)
+    @Column(name = "isCorrect", nullable = false)
     private Boolean isCorrect;
+    
+    @ManyToOne
+    @JoinColumn(name = "questionId", nullable = false)
+    private Question question;
+    
+    // Constructors
+    
+    public Option() {}
+    
+    public Option(Long optionId, String optionText, Boolean isCorrect) {
+		super();
+		this.optionId = optionId;
+		this.optionText = optionText;
+		this.isCorrect = isCorrect;
+	}
 
     // Getters and Setters
 
-    public Long getId() {
-        return id;
+    public Long getOptionId() {
+        return optionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+	public void setOptionId(Long optionId) {
+        this.optionId = optionId;
     }
 
     public Question getQuestion() {
@@ -67,7 +79,7 @@ public class Option {
 
     @Override
     public String toString() {
-        return "Option [id=" + id + ", optionText=" + optionText + ", isCorrect=" + isCorrect + "]";
+        return "Option [id=" + optionId + ", optionText=" + optionText + ", isCorrect=" + isCorrect + "]";
     }
 }
 

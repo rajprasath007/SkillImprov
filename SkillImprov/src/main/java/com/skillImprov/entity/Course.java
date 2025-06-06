@@ -27,7 +27,6 @@ public class Course {
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "courseId", nullable = false)
-	   
 	    private Long courseId;
 
 	    @Column(nullable = false, length = 200)
@@ -36,7 +35,7 @@ public class Course {
 	    @Column(columnDefinition = "TEXT")
 	    private String description;
 
-	    @Column(name = "thumbnail_url")
+	    @Column(name = "thumbnailUrl")
 	    private String thumbnailUrl;
 
 	    @Column(nullable = false, length = 100)
@@ -49,29 +48,32 @@ public class Course {
 	    @Enumerated(EnumType.STRING)
 	    @Column(nullable = false, length = 20)
 	    private VideoStatus status;
+	    
         @CreationTimestamp
-	    @Column(name = "created_at", nullable = false)
+	    @Column(name = "createdAt", nullable = false)
 	    private LocalDateTime createdAt;
+        
         @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name = "UserId", nullable = false)
 	    private User user;
-
-	    public Long getCourseId() {
-			return courseId;
-		}
-		public void setCourseId(Long courseId) {
-			this.courseId = courseId;
-		}
-		public DifficultyLevel getLevel() {
-			return level;
-		}
-		public void setLevel(DifficultyLevel level) {
-			this.level = level;
-		}
 		
 		// Constructors
 	    public Course() {}
-	    public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, User user) {
+	    
+	    public Course(Long courseId, String title, String description, String thumbnailUrl, String category,
+				DifficultyLevel level, VideoStatus status, LocalDateTime createdAt) {
+			super();
+			this.courseId = courseId;
+			this.title = title;
+			this.description = description;
+			this.thumbnailUrl = thumbnailUrl;
+			this.category = category;
+			this.level = level;
+			this.status = status;
+			this.createdAt = createdAt;
+		}
+	    
+		public Course(String title, String description, String thumbnailUrl, String category,DifficultyLevel level, VideoStatus status, User user) {
 	    	this.title = title;
 	    	this.description = description;
 	    	this.thumbnailUrl = thumbnailUrl;
@@ -83,20 +85,12 @@ public class Course {
 	    }
 
 	    // Getters and Setters
-
-	    public User getUser() {
-			return user;
+		public Long getCourseId() {
+			return courseId;
 		}
-		public void setUser(User user) {
-			this.user = user;
+		public void setCourseId(Long courseId) {
+			this.courseId = courseId;
 		}
-		public Long getId() {
-	        return courseId;
-	    }
-
-	    public void setId(Long courseId) {
-	        this.courseId = courseId;
-	    }
         
 	    public String getTitle() {
 	        return title;
@@ -154,15 +148,20 @@ public class Course {
 	    public void setCreatedAt(LocalDateTime createdAt) {
 	        this.createdAt = createdAt;
 	    }
-
-	   
+	    
+	    public User getUser() {
+			return user;
+		}
+	    
+		public void setUser(User user) {
+			this.user = user;
+		}
 	    
 		@Override
 		public String toString() {
 			return "Course [courseId=" + courseId + ", title=" + title + ", description=" + description
 					+ ", thumbnailUrl=" + thumbnailUrl + ", category=" + category + ", level=" + level + ", status="
 					+ status + ", createdAt=" + createdAt + ", instructorId=" + user + "]";
-		} 
-	
+		}
 	
 }

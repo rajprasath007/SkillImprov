@@ -23,25 +23,27 @@ public class Quiz {
 	    @Column(name = "quizId")
 	    private Long quizId;
 
+	    @Column(name = "title",nullable = false)
+	    private String title;
+
+	    @CreationTimestamp
+	    @Column(name = "createdAt", nullable = false, updatable = false)
+	    private LocalDateTime createdAt;
+	    
 	    // Foreign Key to Lesson
 	    @ManyToOne
 	    @JoinColumn(name = "lessonId", nullable = false)
 	    private Lesson lesson;
 
-	    @Column(nullable = false)
-	    private String title;
-
-	    @CreationTimestamp
-	    @Column(name = "created_at", nullable = false, updatable = false)
-	    private LocalDateTime createdAt;
-
 	    // Constructors
 	    public Quiz() {}
 
-	    public Quiz(Lesson lesson, String title) {
-	        this.lesson = lesson;
-	        this.title = title;
-	    }
+	    public Quiz(Long quizId, String title, LocalDateTime createdAt) {
+			super();
+			this.quizId = quizId;
+			this.title = title;
+			this.createdAt = createdAt;
+		}
 
 	    public Quiz(Lesson lesson, String title, LocalDateTime createdAt) {
 	        this.lesson = lesson;
@@ -58,14 +60,6 @@ public class Quiz {
 	        this.quizId = quizId;
 	    }
 
-	    public Lesson getLesson() {
-	        return lesson;
-	    }
-
-	    public void setLesson(Lesson lesson) {
-	        this.lesson = lesson;
-	    }
-
 	    public String getTitle() {
 	        return title;
 	    }
@@ -80,6 +74,14 @@ public class Quiz {
 
 	    public void setCreatedAt(LocalDateTime createdAt) {
 	        this.createdAt = createdAt;
+	    }
+	    
+	    public Lesson getLesson() {
+	        return lesson;
+	    }
+
+	    public void setLesson(Lesson lesson) {
+	        this.lesson = lesson;
 	    }
 
 	    // toString() - Avoid accessing LAZY fields like lesson.toString() directly

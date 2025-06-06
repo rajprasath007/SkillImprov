@@ -25,49 +25,42 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lessonId;
-   
-    public Long getLessonId() {
-		return lessonId;
-	}
-
-	public void setLessonId(Long lessonId) {
-		this.lessonId = lessonId;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
-    private Course course;
-    
-	public Course getCourse() {
-		return course;
-	}
-
-	public void setCourse(Course course) {
-		this.course = course;
-	}
-
-// You can use UUID if your Course uses UUID
 
     @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(name = "video_url")
+    @Column(name = "videoUrl")
     private String videoUrl;
 
-    @Column(name = "order_index", nullable = false)
+    @Column(name = "orderIndex", nullable = false)
     private Integer orderIndex;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "content_type", nullable = false, length = 20)
+    @Column(name = "contentType", nullable = false, length = 20)
     private ContentType contentType;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
+   
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    private Course course;
 
     // Constructors
     public Lesson() {}
 
-    public Lesson(Course course, String title, String videoUrl, Integer orderIndex, ContentType contentType) {
+    public Lesson(Long lessonId, String title, String videoUrl, Integer orderIndex, ContentType contentType,
+			LocalDateTime createdAt) {
+		super();
+		this.lessonId = lessonId;
+		this.title = title;
+		this.videoUrl = videoUrl;
+		this.orderIndex = orderIndex;
+		this.contentType = contentType;
+		this.createdAt = createdAt;
+	}
+
+	public Lesson(Course course, String title, String videoUrl, Integer orderIndex, ContentType contentType) {
         this.course = course;
         this.title = title;
         this.videoUrl = videoUrl;
@@ -77,16 +70,14 @@ public class Lesson {
     }
 
     // Getters and Setters
+	
+	public Long getLessonId() {
+		return lessonId;
+	}
 
-    public Long getId() {
-        return lessonId;
-    }
-
-    public void setId(Long lessonId) {
-        this.lessonId = lessonId;
-    }
-
- 
+	public void setLessonId(Long lessonId) {
+		this.lessonId = lessonId;
+	}
 
     public String getTitle() {
         return title;
@@ -127,6 +118,14 @@ public class Lesson {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+    
+    public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
 	@Override
 	public String toString() {

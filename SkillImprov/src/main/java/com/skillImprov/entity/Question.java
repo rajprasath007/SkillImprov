@@ -1,9 +1,5 @@
 package com.skillImprov.entity;
 
-
-
-import java.io.Serializable;
-
 import org.springframework.stereotype.Component;
 
 import com.skillImprov.enums.QuestionType;
@@ -23,28 +19,38 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "question")
 @Component
-public class Question implements Serializable {
+public class Question {
 
     @Id
+    @Column(name = "questionId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long questionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_id", nullable = false)
-    private Quiz quiz;
-
-    @Column(name = "question_text", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "questionText", columnDefinition = "TEXT", nullable = false)
     private String questionText;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "question_type", nullable = false)
+    @Column(name = "questionType", nullable = false)
     private QuestionType questionType;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quizId", nullable = false)
+    private Quiz quiz;
 
     // Constructors
     public Question() {
     }
 
-    public Question(Quiz quiz, String questionText, QuestionType questionType) {
+    public Question(Long questionId, String questionText, QuestionType questionType) {
+		super();
+		this.questionId = questionId;
+		this.questionText = questionText;
+		this.questionType = questionType;
+	}
+
+
+
+	public Question(Quiz quiz, String questionText, QuestionType questionType) {
         this.quiz = quiz;
         this.questionText = questionText;
         this.questionType = questionType;
@@ -52,12 +58,12 @@ public class Question implements Serializable {
 
     // Getters and Setters
 
-    public Long getId() {
-        return id;
+    public Long getQuestionId() {
+        return questionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setQuestionId(Long id) {
+        this.questionId = id;
     }
 
     public Quiz getQuiz() {
@@ -87,7 +93,7 @@ public class Question implements Serializable {
     @Override
     public String toString() {
         return "Question{" +
-                "id=" + id +
+                "id=" + questionId +
                 ", quiz=" + (quiz != null ? quiz.getQuizId() : null) +
                 ", questionText='" + questionText + '\'' +
                 ", questionType=" + questionType +

@@ -14,7 +14,7 @@ import com.skillImprov.entity.Course;
 import com.skillImprov.entity.Lesson;
 import com.skillImprov.enums.ContentType;
 
-public class LauncherLesson {
+public class LessonLauncher {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
         Lesson lesson = (Lesson) ac.getBean("lesson");

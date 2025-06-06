@@ -22,15 +22,9 @@ import jakarta.persistence.Table;
 @Component
 public class Notification {
 
-    
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    private Long notificationId;
 
     @Column(name = "message", nullable = false, columnDefinition = "TEXT")
     private String message;
@@ -42,22 +36,27 @@ public class Notification {
     @Column(name = "type", nullable = false)
     private NotificationType type;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
+    
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 
-    public Notification(Long id, User user, String message, Boolean seen, NotificationType type,
+    public Notification(Long id,String message, Boolean seen, NotificationType type,
 			LocalDateTime createdAt) {
 		super();
-		this.id = id;
-		this.user = user;
+		this.notificationId = id;
 		this.message = message;
 		this.seen = seen;
 		this.type = type;
 		this.createdAt = createdAt;
 	}
+    
 	public Notification() {
 		super();
 	}
+	
 	public Notification(User user, String message, Boolean seen, NotificationType type, LocalDateTime createdAt) {
 		super();
 		this.user = user;
@@ -66,51 +65,59 @@ public class Notification {
 		this.type = type;
 		this.createdAt = createdAt;
 	}
+	
 	// Getters and Setters
-    public Long getId() { 
-    	return id; 
-    	}
-    public void setId(Long id) { 
-    	this.id = id; 
-    	}
+    public Long getNotificationId() { 
+    	return notificationId; 
+    }
+    
+    public void setNotificationId(Long id) { 
+    	this.notificationId = id; 
+    }
 
     public User getUser() { 
     	return user;
-    	}
+    }
+    
     public void setUser(User user) { 
     	this.user = user; 
-    	}
+    }
 
     public String getMessage() { 
     	return message; 
-    	}
+    }
+    
     public void setMessage(String message) { 
     	this.message = message; 
-    	}
+    }
 
     public Boolean getSeen() { 
     	return seen; 
-    	}
+    }
+    
     public void setSeen(Boolean seen) { 
     	this.seen = seen; 
-    	}
+    }
 
     public NotificationType getType() { 
     	return type; 
-    	}
+    }
+    
     public void setType(NotificationType type) { 
     	this.type = type; 
-    	}
+    }
 
     public LocalDateTime getCreatedAt() { 
     	return createdAt; 
-    	}
+    }
+    
     public void setCreatedAt(LocalDateTime createdAt) { 
     	this.createdAt = createdAt; 
-    	}
+    }
+    
     @Override
 	public String toString() {
-		return "Notification [id=" + id + ", user=" + user + ", message=" + message + ", seen=" + seen + ", type="
+		return "Notification [id=" + notificationId + ", user=" + user + ", message=" + message + ", seen=" + seen + ", type="
 				+ type + ", createdAt=" + createdAt + "]";
 	}
 }

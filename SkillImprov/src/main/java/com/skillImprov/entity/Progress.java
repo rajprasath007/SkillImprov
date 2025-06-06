@@ -1,10 +1,7 @@
 package com.skillImprov.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,44 +17,42 @@ import jakarta.persistence.Table;
 @Component
 public class Progress{
 	@Id
+	@Column(name = "progressId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long progressId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", nullable = false)
+    @Column(nullable = false)
+    private float progressPercentage; // e.g., 75.50 (% complete)
+
+    @Column(name = "updatedAt", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userId", nullable = false)
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "lesson_id", nullable = false)
+	@JoinColumn(name = "lessonId", nullable = false)
 	private Lesson lesson;
-
-    @Column(nullable = false, precision = 5, scale = 2)
-    private BigDecimal progress; // e.g., 75.50 (% complete)
-
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-
+    
     // Constructors
     public Progress() {}
 
-    public Progress(Long userId, Long lessonId, BigDecimal progress, User user, Lesson lesson) {
+    public Progress(Long progressId, float progressPercentage, LocalDateTime updatedAt) {
+		super();
+		this.progressId = progressId;
+		this.progressPercentage = progressPercentage;
+		this.updatedAt = updatedAt;
+	}
+
+	public Progress(Long userId, Long lessonId, float progressPercentage, User user, Lesson lesson) {
         this.user = user;
         this.lesson = lesson;
-        this.progress = progress;
+        this.progressPercentage = progressPercentage;
         this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
-
-    public Long getId() {
-        return progressId;
-    }
-
-    public void setId(Long progressId) {
-        this.progressId = progressId;
-    }
-
-   
 
     public Long getProgressId() {
 		return progressId;
@@ -67,7 +62,23 @@ public class Progress{
 		this.progressId = progressId;
 	}
 
-	public User getUser() {
+	public float getProgressPercentage() {
+        return progressPercentage;
+    }
+
+    public void setProgress(float progressPercentage) {
+        this.progressPercentage = progressPercentage;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public User getUser() {
 		return user;
 	}
 
@@ -83,26 +94,10 @@ public class Progress{
 		this.lesson = lesson;
 	}
 
-	public BigDecimal getProgress() {
-        return progress;
-    }
-
-    public void setProgress(BigDecimal progress) {
-        this.progress = progress;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
 	@Override
 	public String toString() {
 		return "Progress [progressId=" + progressId + ", userId=" + user + ", lessonId=" + lesson + ", progress="
-				+ progress + ", updatedAt=" + updatedAt + "]";
+				+ progressPercentage + ", updatedAt=" + updatedAt + "]";
 	}
 
 }

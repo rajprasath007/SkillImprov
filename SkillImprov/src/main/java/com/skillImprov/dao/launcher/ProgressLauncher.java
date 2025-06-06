@@ -14,7 +14,7 @@ import com.skillImprov.entity.Lesson;
 import com.skillImprov.entity.Progress;
 import com.skillImprov.entity.User;
 
-public class LauncherProgress {
+public class ProgressLauncher {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 		Progress progress =(Progress)(ac.getBean("progress"));
@@ -31,7 +31,6 @@ public class LauncherProgress {
 		if (user != null || lesson != null) {
 		    progress.setUser(user);
 		    progress.setLesson(lesson);
-		    progress.setProgress(new BigDecimal("76.50"));
 		    progress.setUpdatedAt(LocalDateTime.now());
 
 		    // Save to database
@@ -90,8 +89,6 @@ public class LauncherProgress {
 
             if (progress2 != null) {
                 // Step 5: Update fields
-                
-                progress2.setProgress(new BigDecimal("56.70"));
               
                
 

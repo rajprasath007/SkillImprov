@@ -14,7 +14,7 @@ import com.skillImprov.config.BeanConfig;
 import com.skillImprov.entity.Lesson;
 import com.skillImprov.entity.Quiz;
 
-public class LauncherQuiz {
+public class QuizLauncher {
 	
 	public static void main(String[] args) {
 		

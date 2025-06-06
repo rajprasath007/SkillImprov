@@ -13,7 +13,7 @@ import com.skillImprov.entity.Course;
 import com.skillImprov.entity.Enrollment;
 import com.skillImprov.entity.User;
 
-public class LauncherEntrollment {
+public class EnrollmentLauncher {
 	 public static void main(String[] args) {
 			AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 			Enrollment enrollment =(Enrollment)(ac.getBean("enrollment"));

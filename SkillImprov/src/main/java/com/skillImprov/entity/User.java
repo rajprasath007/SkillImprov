@@ -1,12 +1,8 @@
 package com.skillImprov.entity;
 
 import java.time.LocalDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.stereotype.Component;
-
 import com.skillImprov.enums.Role;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,16 +14,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user")
-@Component
 public class User {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId", nullable = false)
 	private Long userId; // Or use Long if you're not using UUID
 
     @Column(nullable = false, unique = false, length = 100)
-    private String username;
+    private String userName;
 
     @Column(nullable = false, unique = true, length = 150)
     private String email;
@@ -38,9 +33,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Role role;
+    
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+    
     @CreationTimestamp
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
@@ -49,7 +46,7 @@ public class User {
     public User() {}
 
     public User(String username, String email, String password, Role role) {
-        this.username = username;
+        this.userName = username;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -66,12 +63,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {
@@ -116,7 +113,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", username=" + username + ", email=" + email + ", password=" + password
+		return "User [userId=" + userId + ", username=" + userName + ", email=" + email + ", password=" + password
 				+ ", role=" + role + ", createdAt=" + createdAt + ", lastLogin=" + lastLogin + "]";
 	}
 }

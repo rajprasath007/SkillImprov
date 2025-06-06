@@ -15,7 +15,7 @@ import com.skillImprov.enums.DifficultyLevel;
 import com.skillImprov.enums.NotificationType;
 import com.skillImprov.enums.VideoStatus;
 
-public class LauncherNotification {
+public class NotificationLauncher {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
 		Notification notification = (Notification) ac.getBean("notification");
