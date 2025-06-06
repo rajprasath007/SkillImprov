@@ -27,9 +27,9 @@ public class UserLauncher {
 
         // Create and save a user
         User user = context.getBean(User.class);
-        user.setUsername("raj");
-        user.setEmail("punda@gmail.com");
-        user.setPassword("raj12345");
+        user.setUsername("joe");
+        user.setEmail("joe@gmail.com");
+        user.setPassword("joe12345");
         user.setRole(Role.STUDENT);
         userDao.save(user);
         System.out.println("User saved!");

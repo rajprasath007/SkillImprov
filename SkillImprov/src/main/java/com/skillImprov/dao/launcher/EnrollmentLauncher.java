@@ -1,131 +1,62 @@
 package com.skillImprov.dao.launcher;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.skillImprov.config.BeanConfig;
+import com.skillImprov.dao.interfaces.CourseDao;
+import com.skillImprov.dao.interfaces.EnrollmentDao;
+import com.skillImprov.dao.interfaces.UserDao;
 import com.skillImprov.entity.Course;
 import com.skillImprov.entity.Enrollment;
 import com.skillImprov.entity.User;
+import com.skillImprov.enums.DifficultyLevel;
+import com.skillImprov.enums.VideoStatus;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import java.util.Optional;
 
+@SpringBootApplication(scanBasePackages = {"com.skillImprov"})
+@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
+@EntityScan(basePackages = "com.skillImprov.entity")
 public class EnrollmentLauncher {
-	 public static void main(String[] args) {
-			AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-			Enrollment enrollment =(Enrollment)(ac.getBean("enrollment"));
-			
-			Session session= (Session) ac.getBean("hibSession");
-			Course course = session.get(Course.class,3L); 
-			User user = session.get(User.class,1L); 
-		    
-		    Transaction tx = session.beginTransaction();
 
-		    System.out.println(user);
-		    System.out.println(course);
-		  
-			if (user != null || course != null) {
-				enrollment.setCourse(course);   // this is required
-				enrollment.setUser(user);
-				enrollment.setCompleted(false);
-				enrollment.setEnrolledAt(LocalDateTime.now());
+    public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(EnrollmentLauncher.class, args);
 
-			    // Save to database
-			    
+        // Get DAO beans
+        UserDao userDao = context.getBean(UserDao.class);
+        CourseDao courseDao = context.getBean(CourseDao.class);
+        EnrollmentDao enrollmentDao = context.getBean(EnrollmentDao.class);
 
-			   
-		        session.persist(enrollment);
-		        tx.commit();
-			    System.out.println("enrollment saved successfully.");
-			} else {
-			    System.out.println("User or course not found.");
-			    tx.rollback();
+        // Create a new user
+        User user = context.getBean(User.class);
+        user.setUsername("alex");
+        user.setEmail("alex@gmail.com");
+        user.setPassword("alex123");
+        userDao.save(user);
 
-			
-			}
-			try {
-	            session.beginTransaction();
+        // Create a new course
+        Course course = context.getBean(Course.class);
+        course.setTitle("Java Basics");
+        course.setDescription("Introductory Java course");
+        course.setThumbnailUrl("http://example.com/java.jpg");
+        course.setCategory("Programming");
+        course.setDifficultyLevel(DifficultyLevel.BEGINNER);
+        course.setStatus(VideoStatus.PUBLISHED);
+        course.setUser(user);
+        courseDao.save(course);
 
-	            List<Enrollment> enrollment1 = session.createQuery("from Enrollment",Enrollment.class).list();
+        // Enroll the user in the course
+        Enrollment enrollment = context.getBean(Enrollment.class);
+        enrollment.setUser(user);
+        enrollment.setCourse(course);
+        enrollment.setEnrolledAt(java.time.LocalDateTime.now());
+        enrollment.setCompleted(false);
+        enrollmentDao.save(enrollment);
+        System.out.println("Enrollment saved!");
 
-	            for (Enrollment en : enrollment1) {
-	                System.out.println(en);
-	            }
-
-	            session.getTransaction().commit();
-	        }catch(Exception e) {
-	        	e.printStackTrace();
-	        }
-			System.out.println("suceesfully fetch: " );
-			 try {
-		            // Step 3: Begin transaction
-		            session.beginTransaction();
-
-		            // Step 4: Fetch the lesson by ID
-		            Long id = 2L; // set the ID you want to fetch
-		            Enrollment enrollment13 = session.get(Enrollment.class, id);
-
-		            if (enrollment13 != null) {
-		                System.out.println("enrollment found: " + enrollment13);
-		            } else {
-		                System.out.println("enrollment not found.");
-		            }
-
-		            // Step 5: Commit transaction
-		            session.getTransaction().commit();
-		        } catch(Exception e) {
-		        	e.printStackTrace();
-		        }
-			 try {
-		            // Step 3: Begin transaction
-		            session.beginTransaction();
-
-		            // Step 4: Get the lesson by ID
-		            Long id = 1L;
-		            Enrollment  enrollment2 = session.get(Enrollment.class, id);
-
-		            if (enrollment2 != null) {
-		                // Step 5: Update fields
-		                
-		                enrollment2.setCompleted(true);
-		              
-		               
-
-		                // Step 6: Hibernate automatically tracks changes (dirty checking)
-		            } else {
-		                System.out.println("Lesson not found");
-		            }
-
-		            // Step 7: Commit transaction
-		            session.getTransaction().commit();
-
-		            System.out.println("enrollment updated successfully.");
-			 } catch(Exception e) {
-		        	e.printStackTrace();
-		     }
-			 try {
-		            Long enrollmentId = 1L; // Change this to the ID you want to delete
-
-		            session.beginTransaction();
-
-		            // Option 1: Retrieve and delete the object
-		            Enrollment  enrollment4 = session.get(Enrollment.class, enrollmentId);
-		            if (enrollment4 != null) {
-		                session.remove(enrollment4);
-		                System.out.println("User deleted successfully.");
-		            } else {
-		                System.out.println("User not found.");
-		            }
-
-		            session.getTransaction().commit();
-		        } finally {
-		            session.close();
-		        }
-			ac.close();
-	     }
-	
-
+        // Fetch and print
+        Optional<Enrollment> fetchedEnrollment = enrollmentDao.findById(enrollment.getEnrollmentId());
+        System.out.println("Fetched Enrollment: " + fetchedEnrollment.orElse(null));
+    }
 }

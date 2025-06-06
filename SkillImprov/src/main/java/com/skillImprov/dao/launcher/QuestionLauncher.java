@@ -1,79 +1,44 @@
 package com.skillImprov.dao.launcher;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import com.skillImprov.config.BeanConfig;
+import com.skillImprov.dao.interfaces.QuestionDao;
+import com.skillImprov.dao.interfaces.QuizDao;
 import com.skillImprov.entity.Question;
 import com.skillImprov.entity.Quiz;
 import com.skillImprov.enums.QuestionType;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.ApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.time.LocalDateTime;
+
+@SpringBootApplication(scanBasePackages = "com.skillImprov")
+@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
+@EntityScan(basePackages = "com.skillImprov.entity")
 public class QuestionLauncher {
+
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanConfig.class);
-        Question question = ac.getBean("question", Question.class);
-        Session session = ac.getBean("hibSession", Session.class);
+        ApplicationContext context = SpringApplication.run(QuestionLauncher.class, args);
 
-        try {
-            Transaction tx = session.beginTransaction();
+        QuizDao quizDao = context.getBean(QuizDao.class);
+        QuestionDao questionDao = context.getBean(QuestionDao.class);
 
-            Quiz quiz = session.get(Quiz.class, 2L);
-            if (quiz != null) {
-                question.setQuestionText("Spring Boot for Beginners");
-                question.setQuestionType(QuestionType.MCQ);
-                question.setQuiz(quiz);
-                session.persist(question);
-                tx.commit();
-                System.out.println("Question saved successfully.");
-            } else {
-                System.out.println("Quiz not found.");
-                tx.rollback();
-            }
+        // Sample Quiz
+        Quiz quiz = context.getBean(Quiz.class);
+        quiz.setTitle("Java Quiz");
+        quiz.setCreatedAt(LocalDateTime.now());
+        quizDao.save(quiz);
 
-            // Fetch all questions
-            session.beginTransaction();
-            List<Question> questions = session.createQuery("from Question", Question.class).list();
-            for (Question q : questions) {
-                System.out.println(q);
-            }
-            session.getTransaction().commit();
+        // Sample Question
+        Question question = context.getBean(Question.class);
+        question.setQuiz(quiz);
+        question.setQuestionText("What is the size of an int in Java?");
+        question.setQuestionType(QuestionType.MCQ); // Assuming this is an enum in your app
+        questionDao.save(question);
 
-            // Fetch question by ID
-            session.beginTransaction();
-            Question q2 = session.get(Question.class, 2L);
-            System.out.println(q2 != null ? "Question found: " + q2 : "Question not found.");
-            session.getTransaction().commit();
-
-            // Update question
-            session.beginTransaction();
-            Question q3 = session.get(Question.class, 3L);
-            if (q3 != null) {
-                q3.setQuestionText("Spring Boot and Java for Beginners");
-            } else {
-                System.out.println("Question not found.");
-            }
-            session.getTransaction().commit();
-            System.out.println("Question updated successfully.");
-
-            // Delete question
-            session.beginTransaction();
-            Question qToDelete = session.get(Question.class, 1L);
-            if (qToDelete != null) {
-                session.remove(qToDelete);
-                System.out.println("Question deleted successfully.");
-            } else {
-                System.out.println("Question not found for deletion.");
-            }
-            session.getTransaction().commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            session.close();
-            ac.close();
-        }
+        System.out.println("Question saved!");
+        System.out.println(questionDao.findById(question.getQuestionId()).orElse(null));
     }
 }
