@@ -15,10 +15,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootApplication(scanBasePackages = "com.skillImprov")
-@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
 @EntityScan(basePackages = "com.skillImprov.entity")
 public class LessonLauncher {
 
@@ -33,7 +34,7 @@ public class LessonLauncher {
         // Create and save a user
         User user = context.getBean(User.class);
         user.setUsername("emma");
-        user.setEmail("emma@gmail.com");
+        user.setEmail("emma1@gmail.com");
         user.setPassword("emma123");
         user.setRole(Role.INSTRUCTOR);
         userDao.save(user);
@@ -53,6 +54,7 @@ public class LessonLauncher {
         Lesson lesson = context.getBean(Lesson.class);
         lesson.setCourse(course);
         lesson.setTitle("Introduction to Spring Boot");
+        lesson.setCreatedAt(LocalDateTime.now());
         lesson.setVideoUrl("http://example.com/springboot_intro.mp4");
         lesson.setOrderIndex(1);
         lesson.setContentType(ContentType.VIDEO);

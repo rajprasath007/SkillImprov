@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootApplication(scanBasePackages = "com.skillImprov")
-@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
 @EntityScan(basePackages = "com.skillImprov.entity")
 public class NotificationLauncher {
 

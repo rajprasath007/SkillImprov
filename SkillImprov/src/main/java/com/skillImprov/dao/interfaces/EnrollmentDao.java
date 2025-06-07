@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface EnrollmentDao extends JpaRepository<Enrollment, Long> {
     List<Enrollment> findByUserUserId(Long userId);
     List<Enrollment> findByCourseCourseId(Long courseId);

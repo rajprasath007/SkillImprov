@@ -53,7 +53,7 @@ public class Course {
 	    @Column(name = "createdAt", nullable = false)
 	    private LocalDateTime createdAt;
         
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
 	    @JoinColumn(name = "UserId", nullable = false)
 	    private User user;
 		

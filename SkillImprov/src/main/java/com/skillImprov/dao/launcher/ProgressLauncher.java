@@ -5,6 +5,7 @@ import com.skillImprov.dao.interfaces.UserDao;
 import com.skillImprov.dao.interfaces.LessonDao;
 import com.skillImprov.entity.Progress;
 import com.skillImprov.entity.User;
+import com.skillImprov.enums.Role;
 import com.skillImprov.entity.Lesson;
 
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.time.LocalDateTime;
 
 @SpringBootApplication(scanBasePackages = "com.skillImprov")
-@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
 @EntityScan(basePackages = "com.skillImprov.entity")
 public class ProgressLauncher {
 
@@ -31,6 +31,7 @@ public class ProgressLauncher {
         User user = context.getBean(User.class);
         user.setUsername("progress_user");
         user.setEmail("progress_user@example.com");
+        user.setRole(Role.ADMIN);
         user.setPassword("test123");
         userDao.save(user);
 

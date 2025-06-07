@@ -33,7 +33,7 @@ public class Question {
     @Column(name = "questionType", nullable = false)
     private QuestionType questionType;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "quizId", nullable = false)
     private Quiz quiz;
 

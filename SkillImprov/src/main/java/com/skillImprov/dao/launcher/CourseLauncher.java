@@ -5,6 +5,7 @@ import com.skillImprov.dao.interfaces.UserDao;
 import com.skillImprov.entity.Course;
 import com.skillImprov.entity.User;
 import com.skillImprov.enums.DifficultyLevel;
+import com.skillImprov.enums.Role;
 import com.skillImprov.enums.VideoStatus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.Optional;
 
 @SpringBootApplication(scanBasePackages = {"com.skillImprov"})
-@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
 @EntityScan(basePackages = "com.skillImprov.entity")
 public class CourseLauncher {
 
@@ -29,7 +29,8 @@ public class CourseLauncher {
         // Create or fetch a user
         User user = context.getBean(User.class);
         user.setUsername("raj");
-        user.setEmail("raj@gmail.com");
+        user.setEmail("rajp@gmail.com");
+        user.setRole(Role.STUDENT);
         user.setPassword("raj123");
         userDao.save(user);
 

@@ -15,7 +15,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.time.LocalDateTime;
 
 @SpringBootApplication(scanBasePackages = "com.skillImprov")
-@EnableJpaRepositories(basePackages = "com.skillImprov.dao.interfaces")
 @EntityScan(basePackages = "com.skillImprov.entity")
 public class QuizLauncher {
 
@@ -30,6 +29,7 @@ public class QuizLauncher {
         lesson.setTitle("Spring Boot Introduction");
         lesson.setContentType(ContentType.VIDEO);
         lesson.setCreatedAt(LocalDateTime.now());
+        lesson.setOrderIndex(1);
         lessonDao.save(lesson);
 
         // Create Quiz
