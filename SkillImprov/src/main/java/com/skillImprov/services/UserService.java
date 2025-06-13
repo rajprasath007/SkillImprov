@@ -1,6 +1,8 @@
-package com.skillImprov.dao.services;
+package com.skillImprov.services;
 
 import com.skillImprov.dao.interfaces.UserDao;
+import com.skillImprov.dto.LoginDTO;
+import com.skillImprov.dto.RegisterDTO;
 import com.skillImprov.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,34 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    public String login(LoginDTO loginDTO) {
+    	Optional<User> userOptional = findByEmail(loginDTO.getEmail());
+    	if(userOptional.isPresent()) {
+    		if(userOptional.get().getPassword().equals(loginDTO.getPassword())) return "Login Successful";
+    		return "Wrong Password !";
+    	}
+    	return "User does not exist";
+    }
+    
+    
+    public String register(RegisterDTO registerDTO) {
+        Optional<User> userOptional = findByEmail(registerDTO.getEmail());
+
+        if (userOptional.isPresent()) {
+            return "User already exists";
+        }
+
+        User user = new User();
+        user.setUsername(registerDTO.getUserName());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(registerDTO.getPassword());
+
+        userDao.save(user);
+
+        return "User registered successfully";
+    }
+
+    
     // Save or update user
     public User save(User user) {
         return userDao.save(user);

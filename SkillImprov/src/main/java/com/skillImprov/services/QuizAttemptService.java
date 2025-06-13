@@ -1,4 +1,4 @@
-package com.skillImprov.dao.services;
+package com.skillImprov.services;
 
 import com.skillImprov.dao.interfaces.QuizAttemptDao;
 import com.skillImprov.entity.QuizAttempt;
