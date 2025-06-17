@@ -2,6 +2,19 @@ import logo from '../logo.svg';
 import '../styles/App.css';
 
 function App() {
+
+  async function getSample() {
+    try {
+      let res = await fetch("http://localhost:8080/api/sample");
+      let data = await res.json(); // or res.json() if JSON response
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  getSample();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -11,7 +24,7 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="http://localhost:8080/api/sample"
           target="_blank"
           rel="noopener noreferrer"
         >
