@@ -1,8 +1,9 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.QuestionDao;
 import com.skillImprov.entity.Question;
 import com.skillImprov.entity.Quiz;
+import com.skillImprov.repositories.QuestionDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

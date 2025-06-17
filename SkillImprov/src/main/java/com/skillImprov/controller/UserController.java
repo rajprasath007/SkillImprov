@@ -1,11 +1,11 @@
 package com.skillImprov.controller;
 //controller/UserController.java
 
-import java.util.Optional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,20 +20,25 @@ import com.skillImprov.services.UserService;
 @CrossOrigin(origins = "http://localhost:3000") 
 public class UserController {
 	
-	UserService userService = new UserService();
+	@Autowired
+	UserService userService;
 
- @PostMapping("/register")
- public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registorDTO) {
-     String message = userService.register(registorDTO);
-     return ResponseEntity.ok(message);
- }
+ 	@PostMapping("/register")
+ 	public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registorDTO) {
+ 		String message = userService.register(registorDTO);
+     	return ResponseEntity.ok(message);
+ 	}
 
- @PostMapping("/login")
- public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
-     String message = userService.login(loginDTO);
-
-     if(!message.equals("Login Successful")) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-
-     return ResponseEntity.ok("Login successful");
- }
+ 	@PostMapping("/login")
+ 	public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+    	String message = userService.login(loginDTO);
+     	if(!message.equals("Login Successful")) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+     	return ResponseEntity.ok("Login successful");
+     }
+ 
+ 	@GetMapping("/sample")
+ 	public ResponseEntity<?> sample(){
+ 		return ResponseEntity.ok("Login successful");
+ 	}
+ 
 }

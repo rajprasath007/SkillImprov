@@ -1,9 +1,10 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.UserDao;
 import com.skillImprov.dto.LoginDTO;
 import com.skillImprov.dto.RegisterDTO;
 import com.skillImprov.entity.User;
+import com.skillImprov.repositories.UserDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

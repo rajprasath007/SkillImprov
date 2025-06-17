@@ -1,9 +1,11 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.CourseDao;
+
 import com.skillImprov.entity.Course;
 import com.skillImprov.entity.User;
 import com.skillImprov.enums.VideoStatus;
+import com.skillImprov.repositories.CourseDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.ProgressDao;
 import com.skillImprov.entity.Progress;
 import com.skillImprov.entity.User;
+import com.skillImprov.repositories.ProgressDao;
 import com.skillImprov.entity.Lesson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

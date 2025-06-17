@@ -1,7 +1,8 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.EnrollmentDao;
 import com.skillImprov.entity.Enrollment;
+import com.skillImprov.repositories.EnrollmentDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

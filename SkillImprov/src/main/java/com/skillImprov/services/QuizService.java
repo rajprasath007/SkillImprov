@@ -1,7 +1,7 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.QuizDao;
 import com.skillImprov.entity.Quiz;
+import com.skillImprov.repositories.QuizDao;
 import com.skillImprov.entity.Lesson;
 
 import org.springframework.beans.factory.annotation.Autowired;

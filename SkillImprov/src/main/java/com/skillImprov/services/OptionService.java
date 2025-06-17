@@ -1,8 +1,9 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.OptionDao;
 import com.skillImprov.entity.Option;
 import com.skillImprov.entity.Question;
+import com.skillImprov.repositories.OptionDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

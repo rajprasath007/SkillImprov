@@ -1,7 +1,8 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.LessonDao;
 import com.skillImprov.entity.Lesson;
+import com.skillImprov.repositories.LessonDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

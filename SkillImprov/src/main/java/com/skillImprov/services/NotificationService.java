@@ -1,8 +1,9 @@
 package com.skillImprov.services;
 
-import com.skillImprov.dao.interfaces.NotificationDao;
 import com.skillImprov.entity.Notification;
 import com.skillImprov.entity.User;
+import com.skillImprov.repositories.NotificationDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
